@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://di6j45b6xmlcg"]
+
+[ext_resource type="Script" path="res://addons/componentable/editor/componenttable_inspector_v_2.gd" id="1_l5ph8"]
+[ext_resource type="Texture2D" uid="uid://q4jjetbi8hxw" path="res://addons/componentable/icons/Component.svg" id="1_sjqat"]
+[ext_resource type="PackedScene" uid="uid://cvm8u87gjt3et" path="res://addons/componentable/editor/create_component_dialog.tscn" id="3_pk0gj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tssh5"]
+outline_size = 1
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_d36gi"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_44nub"]
+
+[node name="ComponenttableInspectorV2" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+script = ExtResource("1_l5ph8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonAddComp" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Create a new component."
+text = "ADD"
+icon = ExtResource("1_sjqat")
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "No Compoments!"
+label_settings = SubResource("LabelSettings_tssh5")
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxLine_d36gi")
+text = "ATTACHED"
+
+[node name="ScrollContainerAttach" type="ScrollContainer" parent="VBoxContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainerAttach" type="VBoxContainer" parent="VBoxContainer/VSplitContainer/VBoxContainer/ScrollContainerAttach"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/VSplitContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxLine_44nub")
+text = "ALL"
+
+[node name="ScrollContainerAll" type="ScrollContainer" parent="VBoxContainer/VSplitContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainerAll" type="VBoxContainer" parent="VBoxContainer/VSplitContainer/VBoxContainer2/ScrollContainerAll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CreateComponentDialog" parent="." instance=ExtResource("3_pk0gj")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonAddComp" to="." method="_on_button_add_comp_pressed"]

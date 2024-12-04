@@ -16,7 +16,7 @@ const script_icon = preload("res://addons/componentable/icons/Script.svg")
 const remove_icon = preload("res://addons/componentable/icons/Remove.svg")
 
 func _enter_tree() -> void:
-	EditorInterface.get_selection().selection_changed.connect(_selected_nodes)
+	EditorInterface.get_selection().selection_changed.connect(_on_selected_nodes_changed)
 	item_activated.connect(_create_button)
 	item_edited.connect(_item_edited)
 	file_dialog.close_requested.connect(func (): file_dialog.hide())
@@ -27,7 +27,7 @@ func _enter_tree() -> void:
 	button_clicked.connect(_button_click)
 	
 func _exit_tree() -> void:
-	EditorInterface.get_selection().selection_changed.disconnect(_selected_nodes)
+	EditorInterface.get_selection().selection_changed.disconnect(_on_selected_nodes_changed)
 	if item_activated.is_connected(_create_button):
 		item_activated.disconnect(_create_button)
 	if item_edited.is_connected(_item_edited):
@@ -53,7 +53,7 @@ func _button_click(item: TreeItem, column: int, id: int, mouse_button_index: int
 			var component = Component.find(node, item.get_metadata(0)['component'])
 			EditorInterface.inspect_object(component)
 
-func _selected_nodes():
+func _on_selected_nodes_changed():
 	var nodes = EditorInterface.get_selection().get_selected_nodes()
 	create_root()
 	

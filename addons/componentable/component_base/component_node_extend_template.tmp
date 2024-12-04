@@ -1,0 +1,13 @@
+extends TMP_EXTEND_TYPE
+class_name TMP_CLASS_NAME 
+@export @onready var host:TMP_HOST_TYPE = get_host()
+
+const kComponentExtendTypeName = "TMP_EXTEND_TYPE"
+const kComponentClassName = "TMP_CLASS_NAME"
+const kComponentHostTypeName = "TMP_HOST_TYPE"
+
+# you can implement your own get_host() method to return the host node 
+# or specify the host node in the inspector, beacuse the host variable is exported
+
+#func get_host() -> Node:
+#    pass

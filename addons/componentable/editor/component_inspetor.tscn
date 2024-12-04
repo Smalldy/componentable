@@ -1,0 +1,87 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg3cy1xd3o0ya"]
+
+[ext_resource type="Script" path="res://addons/componentable/editor/component_inspetor.gd" id="1_wadaf"]
+[ext_resource type="Texture2D" uid="uid://duxeh5dudkufq" path="res://addons/componentable/icons/Remove.svg" id="2_o0mlv"]
+[ext_resource type="Texture2D" uid="uid://bw4450e33maow" path="res://addons/componentable/icons/Script.svg" id="2_ow3n8"]
+
+[node name="ComponentInspetor" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("1_wadaf")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="ButtonAttach" type="Button" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ATTACH"
+
+[node name="ButtonDetach" type="Button" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "DETACH"
+
+[node name="CheckButtonEnableComp" type="CheckButton" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enable or disable the component."
+
+[node name="LabelEnableStatus" type="Label" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Disable"
+
+[node name="Spacer" type="Control" parent="PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="ButtonEditScript" type="Button" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Remove the node from editor scene tree."
+icon = ExtResource("2_ow3n8")
+
+[node name="Spacer3" type="Control" parent="PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="ComponentShowNameLabel" type="Label" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Conmpoent Name"
+
+[node name="Spacer2" type="Control" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RemoveComponent" type="Button" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Delete the component!"
+icon = ExtResource("2_o0mlv")
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/ButtonAttach" to="." method="_on_button_attach_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/ButtonDetach" to="." method="_on_button_detach_pressed"]
+[connection signal="toggled" from="PanelContainer/HBoxContainer/CheckButtonEnableComp" to="." method="_on_check_button_enable_comp_toggled"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/ButtonEditScript" to="." method="_on_button_edit_script_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/RemoveComponent" to="." method="_on_remove_component_pressed"]
