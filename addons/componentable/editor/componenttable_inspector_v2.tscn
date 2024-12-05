@@ -92,3 +92,5 @@ unique_name_in_owner = true
 visible = false
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonAddComp" to="." method="_on_button_add_comp_pressed"]
+[connection signal="component_attached" from="CreateComponentDialog" to="." method="_on_create_component_dialog_component_attached"]
+[connection signal="new_component_created" from="CreateComponentDialog" to="." method="_on_create_component_dialog_new_component_created"]

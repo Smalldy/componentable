@@ -1,5 +1,5 @@
 #######################################
-# 保存组件必须的信息
+# 保存组件静态信息
 #######################################
 
 extends Node
@@ -28,7 +28,3 @@ var component_class_name:String
 var script_resource_path:String
 ## kSceneComponent 有效
 var tscn_resource_path:String
-
-######################## 挂载信息 ###################
-## host instance
-var host:Node = null

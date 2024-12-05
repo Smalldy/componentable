@@ -16,6 +16,8 @@ var host_class_name_str_script_custom_type_name: String
 var host_class_name_str_script_build_in_type_name: String
 var host_class_name_str_script_node_type_name: String
 
+signal new_component_created(component_class_name: String)
+signal component_attached()
 
 func _ready() -> void:
 	add_unique_option("ComponentGroupNode", [], 0)
@@ -112,12 +114,17 @@ func _on_confirmed() -> void:
 	print("will create file ",current_path)
 	if current_file_type == "gd":
 		# 代码生成
-		var comp_id= ComponentCore.replace_script_template(current_path, extend_type, compoent_class_name, host_type)
-		editor_plugin.componentable2_ui.add_component_to_all(comp_id)
+		var component_data:ComponentData = ComponentCore.replace_script_template(current_path, extend_type, compoent_class_name, host_type)
+		# 记录新的组件信息
+		if ComponentDB.has_same_component_type(component_data.component_class_name):
+			print("component type already exist")
+			return
+		ComponentDB.set_component_info(component_data)
+		new_component_created.emit(component_data.component_class_name)
 		# 挂载节点
-		ComponentCore.attach_node_with_script(selected_node, current_path, comp_id)
-		
-		
+		ComponentCore.attach_node_with_script(selected_node, current_path, component_data.component_class_name)
+		# 刷新界面
+		component_attached.emit()
 
 	elif current_file_type == "tscn":
 		pass
