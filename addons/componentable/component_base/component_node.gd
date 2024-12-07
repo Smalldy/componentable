@@ -5,3 +5,4 @@ class_name ComponentNode
 
 func get_host() -> Node :
 	return  get_parent()
+	

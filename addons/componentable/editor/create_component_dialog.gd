@@ -95,9 +95,9 @@ func _on_confirmed() -> void:
 	var host_type = component_host_types[selected_options["ComponentHostType"]]
 	var extend_type = component_extands_type
 	# 类名用文件名做转换 格式最终转换为 SomeThing 
-	var compoent_class_name = current_file.get_file().get_basename()
-	compoent_class_name = compoent_class_name.capitalize()
-	compoent_class_name = compoent_class_name.replace(" ", "")
+	var compoent_class_name = ComponentCore.get_class_name_from_file_basename(current_file.get_file().get_basename())
+	
+	
 	print("component class name = ", compoent_class_name)
 	print("component host type name = ", host_type)
 	print("component extend type name = ", extend_type)
@@ -106,25 +106,26 @@ func _on_confirmed() -> void:
 	# 使用更宽泛的类型可以增加适用范围，使用更精确的类型可以更加定制化
 	# 如果创建分组节点 那么同类型的组件将会挂在在一个分类节点下 这个分类节点的类型只能是Node Node2D Node3D Control中的一种
 	
-
 	var selected_nodes = editor_interface.get_selection().get_selected_nodes()
 	var selected_node = selected_nodes[0]
 	# 获取文件的后缀
 	var current_file_type = current_file.get_extension()
 	print("will create file ",current_path)
 	if current_file_type == "gd":
-		# 代码生成
-		var component_data:ComponentData = ComponentCore.replace_script_template(current_path, extend_type, compoent_class_name, host_type)
-		# 记录新的组件信息
-		if ComponentDB.has_same_component_type(component_data.component_class_name):
-			print("component type already exist")
+		if Component.create_gd_component(current_path, extend_type, compoent_class_name, host_type) :
+			new_component_created.emit(compoent_class_name)
+		else:
+			print("create gd component failed")
 			return
-		ComponentDB.set_component_info(component_data)
-		new_component_created.emit(component_data.component_class_name)
-		# 挂载节点
-		ComponentCore.attach_node_with_script(selected_node, current_path, component_data.component_class_name)
-		# 刷新界面
-		component_attached.emit()
+
+		var node_attached:Node = Component.attach_gd_component(selected_node, current_path, compoent_class_name) 
+		if node_attached != null:
+			component_attached.emit()
+		else:
+			print("attach gd component failed")
+			return
+	
+		
 
 	elif current_file_type == "tscn":
 		pass
@@ -149,3 +150,4 @@ func add_unique_filter(pattern: String, description: String) -> void:
 		if filter == pattern + " ; " + description:
 			return
 	add_filter(pattern, description)
+

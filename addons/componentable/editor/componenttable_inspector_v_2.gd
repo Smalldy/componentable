@@ -22,16 +22,16 @@ func _on_button_add_comp_pressed() -> void:
 
 func add_component_to_all(component_class_name:String):
 	var inspector_item:ComponentInspectorItem = inspector_item_packed_scene.instantiate()
-	inspector_item.attach_mod = false
 	var component_data:ComponentData = ComponentDB.find_componet_info(component_class_name)
 	$"%VBoxContainerAll".add_child(inspector_item)
+	inspector_item.attach_mod = false
 	inspector_item.set_component_data(component_data)
 
 func add_component_to_attached(component_class_name:String, attached_info:ComponentAttachData):
 	var inspector_item:ComponentInspectorItem = inspector_item_packed_scene.instantiate()
-	inspector_item.attach_mod = true
 	var component_data:ComponentData = ComponentDB.find_componet_info(component_class_name)
 	$"%VBoxContainerAttach".add_child(inspector_item)
+	inspector_item.attach_mod = true
 	inspector_item.set_component_data(component_data)
 	inspector_item.set_component_attached_data(attached_info)
 	pass

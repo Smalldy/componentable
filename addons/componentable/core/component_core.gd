@@ -3,6 +3,30 @@ class_name ComponentCore
 const tmp_script_file_path: String = "res://addons/componentable/component_base/component_node_extend_template.tmp"
 const COMPONENT_GROUP_NAME: String = "component_group"
 
+static var editor_plugin: EditorPlugin = null
+static var editor_interface: EditorInterface = null
+static var editor_inspector: EditorInspector = null
+static var signal_bus: ComponentSignalBus = null
+
+
+static func set_editor_plugin(new_editor_plugin: EditorPlugin):
+	editor_plugin = new_editor_plugin
+	if editor_plugin:
+		editor_interface = editor_plugin.get_editor_interface()
+		editor_inspector = editor_interface.get_inspector()
+	else:
+		editor_interface = null
+
+static func get_editor_plugin() -> EditorPlugin:
+	return editor_plugin
+
+static func get_selected_node() -> Node:
+	if editor_interface.get_selection().get_selected_nodes().size():
+		return editor_interface.get_selection().get_selected_nodes()[0]
+	else:
+		return null
+
+
 static func replace_script_template(target_script_path: String, temp_extend: String, tmp_class_name: String, tmp_host_type: String) -> ComponentData:
 	# 读取tmp_script_file_path文件
 	var tmp_script_file = FileAccess.open(tmp_script_file_path, FileAccess.READ)
@@ -32,7 +56,7 @@ static func replace_script_template(target_script_path: String, temp_extend: Str
 	
 
 # 创建节点并挂载脚本 
-static func attach_node_with_script(host: Node, target_script_path: String, component_class_name: String):
+static func attach_node_with_script(host: Node, target_script_path: String, component_class_name: String) -> Node:
 	var component_data: ComponentData = ComponentDB.find_componet_info(component_class_name)
 	var editor_plugin = EditorPlugin.new()
 	var script: GDScript = load(target_script_path)
@@ -41,3 +65,17 @@ static func attach_node_with_script(host: Node, target_script_path: String, comp
 	node.add_to_group("components")
 	host.add_child(node)
 	node.owner = editor_plugin.get_editor_interface().get_edited_scene_root()
+	return node
+
+
+static func get_class_name_from_file_basename(base_name: String) -> String:
+	var compoent_class_name = base_name
+	compoent_class_name = compoent_class_name.capitalize()
+	compoent_class_name = compoent_class_name.replace(" ", "")
+	return compoent_class_name
+
+static func is_current_node_a_component() -> bool:
+	var selected_node = get_selected_node()
+	if selected_node and ComponentDB.has_same_component_type(selected_node.get_script().get_global_name()):
+		return true
+	return false
