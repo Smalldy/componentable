@@ -61,9 +61,9 @@ static func attach_node_with_script(host: Node, target_script_path: String, comp
 	var editor_plugin = EditorPlugin.new()
 	var script: GDScript = load(target_script_path)
 	var node = script.new()
-	node.name = component_data.component_class_name
-	node.add_to_group("components")
 	host.add_child(node)
+	node.name = component_data.component_class_name
+	node.add_to_group("components", true)
 	node.owner = editor_plugin.get_editor_interface().get_edited_scene_root()
 	return node
 
@@ -79,3 +79,25 @@ static func is_current_node_a_component() -> bool:
 	if selected_node and ComponentDB.has_same_component_type(selected_node.get_script().get_global_name()):
 		return true
 	return false
+
+static func get_child_component_nodes(host: Node) -> Array:
+	if not host:
+		print('get_child_component_nodes host is null')
+		return []
+
+	var components:Array = []
+	for child in host.get_children():
+		if child.is_in_group('components') and  ComponentDB.has_same_component_type(child.get_script().get_global_name()):
+			components.append(child)
+		
+	return components
+
+static func get_host_attached_infos(host: Node) -> Array[ComponentAttachData]:
+	var attach_infos:Array[ComponentAttachData] = []
+	for component in get_child_component_nodes(host):
+		var attach_info = ComponentAttachData.new()
+		attach_info.component_path = component.get_path()
+		attach_info.component_class_name = component.get_script().get_global_name()
+		attach_info.enable = host.get_node(attach_info.component_path).enable
+		attach_infos.append(attach_info)
+	return attach_infos

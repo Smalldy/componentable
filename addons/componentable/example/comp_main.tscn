@@ -1,5 +1,11 @@
-[gd_scene format=3 uid="uid://dsb6mpm4il22v"]
+[gd_scene load_steps=2 format=3 uid="uid://dsb6mpm4il22v"]
+
+[ext_resource type="Script" path="res://addons/componentable/example/example_components/test.gd" id="1_2eywi"]
 
 [node name="CompMain" type="Node2D"]
 
 [node name="Node" type="Node" parent="."]
+
+[node name="Test" type="Node" parent="Node" node_paths=PackedStringArray("host") groups=["components"]]
+script = ExtResource("1_2eywi")
+host = NodePath("..")

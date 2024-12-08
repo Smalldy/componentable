@@ -37,21 +37,25 @@ func clear_attached_info() -> bool:
 	return true
 		
 func dump_to_json() -> bool:
-	var json_path = "res://addons/componentable/data/components.tres"
-	var json:JSON = JSON.parse_string(JSON.stringify(component_data_dict))
-
-	var error = ResourceSaver.save(json, json_path)
+	var res_path = "res://addons/componentable/user_component_data/components.tres"
+	var res = ComponnetDataRes.new()
+	res.component_data_dict = component_data_dict
+	var error = ResourceSaver.save(res, res_path)
 	if error != OK:
-		push_error("dump to json failed")
+		push_error("dump to res failed ", self)
 		return false
 	return true
 
 func load_from_json() -> bool:
-	var json_path = "res://addons/componentable/data/components.tres"
-	var json:JSON = ResourceLoader.load(json_path)
-	if json == null:
-		push_error("load json failed")
+	var res_path = "res://addons/componentable/user_component_data/components.tres"
+	if not ResourceLoader.exists(res_path):
+		return true
+		
+	var comp_dict_res:ComponnetDataRes = ResourceLoader.load(res_path)
+	if comp_dict_res == null:
+		push_error("load res failed ", self)
 		return false
-	component_data_dict = json.data
+	component_data_dict = comp_dict_res.component_data_dict
+	print("load component res sunncess , data = ", component_data_dict)
 	return true
 	

@@ -59,20 +59,26 @@ func _on_check_button_enable_comp_toggled(toggled_on: bool) -> void:
 		return
 
 	print("_on_check_button_enable_comp_toggled comp.enable = ", comp.enable)
+	# 如果不一致就更新数据
 	if toggled_on and component_attched_data.enable == false:
 		component_attched_data.enable = true
+		
+	elif !toggled_on and component_attched_data.enable == true:
+		component_attched_data.enable = false
+	else :
+		# 如果新的值与旧的值相同，则不处理
+		pass
+	
+	# 改变样式
+	if toggled_on:
 		comp.enable = true
 		label_enable_status.text = "Enable"
 		label_enable_status.add_theme_color_override("font_color", Color.GREEN)
-	elif !toggled_on and component_attched_data.enable == true:
-		component_attched_data.enable = false
+	else:
 		comp.enable = false
 		label_enable_status.text = "Disable"
 		label_enable_status.add_theme_color_override("font_color", Color.RED)
-	else :
-		# 如果新的值与旧的值相同，则不处理
-		return
-	pass
+
 
 	
 func apply_data(data: ComponentData):

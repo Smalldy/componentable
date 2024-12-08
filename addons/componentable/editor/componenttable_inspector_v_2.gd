@@ -5,7 +5,8 @@ var inspector_item_packed_scene = preload("res://addons/componentable/editor/com
 var selected_node:Node
 
 func _ready() -> void:
-	# ComponentDB.load_from_json()
+	print("componentable_inspector_v_2 ready, self = ", self)
+	ComponentDB.load_from_json()
 	pass
 
 func _on_button_add_comp_pressed() -> void:
@@ -36,6 +37,13 @@ func add_component_to_attached(component_class_name:String, attached_info:Compon
 	inspector_item.set_component_attached_data(attached_info)
 	pass
 
+func get_attached_info(component:Node) -> ComponentAttachData: 
+	var info:ComponentAttachData = ComponentAttachData.new()
+	info.component_path = component.get_path()
+	info.component_class_name = component.get_script().get_global_name()
+	info.enable = component.enable
+	return info
+	
 func refresh_attached():
 	for child in $"%VBoxContainerAttach".get_children():
 		child.queue_free()
@@ -49,7 +57,7 @@ func refresh_attached():
 func _on_create_component_dialog_new_component_created(component_class_name:String) -> void:
 	print('_on_create_component_dialog_new_component_created')
 	add_component_to_all(component_class_name)
-	# ComponentDB.dump_to_json()
+	ComponentDB.dump_to_json()
 	pass # Replace with function body.
 
 func _on_create_component_dialog_component_attached() -> void:
@@ -67,3 +75,15 @@ func _on_create_component_dialog_component_attached() -> void:
 	refresh_attached()
 
 	pass # Replace with function body.
+
+
+func _on_selection_changed() -> void:
+	print('selection changed!')
+	var current_node = ComponentCore.get_selected_node()
+	var attached_component_nodes:Array = ComponentCore.get_child_component_nodes(current_node)
+	ComponentDB.clear_attached_info()
+	for attached_node in attached_component_nodes:
+		var attached_info = get_attached_info(attached_node)
+		ComponentDB.add_attached_info(attached_info)
+	refresh_attached()
+	pass

@@ -27,6 +27,8 @@ func _enter_tree():
 				ComponentCore.editor_inspector.get_edited_object().get(property)
 			)
 	)
+	
+	ComponentCore.editor_interface.get_selection().selection_changed.connect(componentable2_ui._on_selection_changed)
 
 
 
