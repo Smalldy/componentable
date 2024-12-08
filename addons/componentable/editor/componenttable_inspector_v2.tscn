@@ -42,7 +42,7 @@ icon = ExtResource("1_sjqat")
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "No Compoments!"
+text = "插件目前处于早期阶段，请注意保存项目"
 label_settings = SubResource("LabelSettings_tssh5")
 
 [node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]

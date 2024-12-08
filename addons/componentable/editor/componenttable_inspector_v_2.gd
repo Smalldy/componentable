@@ -92,3 +92,4 @@ func _on_selection_changed() -> void:
 		ComponentDB.add_attached_info(attached_info)
 	refresh_attached()
 	pass
+

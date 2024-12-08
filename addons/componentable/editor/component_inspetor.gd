@@ -92,7 +92,8 @@ func apply_attached_data(data: ComponentAttachData):
 	
 
 func _on_remove_component_pressed() -> void:
-	print("_on_remove_component_pressed not implement")
+	# print("_on_remove_component_pressed not implement")
+	$"%ConfirmDeleteComponentDialog".show()
 	pass # Replace with function body.
 
 
@@ -113,5 +114,16 @@ func _on_button_detach_pressed() -> void:
 	print("_on_button_detach_pressed not implement")
 	Component.detach_gd_component(component_attched_data.component_path)
 	ComponentCore.signal_bus.refresh_attach_list.emit()
+	pass # Replace with function body.
+
+
+func _on_confirm_delete_component_dialog_confirmed() -> void:
+	# 此处本来是想删除分离所有组件 但是目前只能分离当前选中节点的组件 这会造成行为不一致
+	# 因此目前的策略是组件由用户分离 因此产生的依赖丢失问题由用户解决
+	# for component:ComponentAttachData in ComponentCore.get_host_attached_infos(ComponentCore.get_selected_node()) :
+	# 	var component_node_path = component.component_path
+	# 	if ComponentDB.has_same_component_type(component.component_class_name) :
+	# 		Component.detach_gd_component(component_node_path)
+	Component.remove_gd_component(component_data.component_class_name)
 	pass # Replace with function body.
 

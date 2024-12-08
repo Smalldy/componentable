@@ -44,6 +44,7 @@ func dump_to_res() -> bool:
 	if error != OK:
 		push_error("dump to res failed ", self)
 		return false
+	print("dump component res success , data = ", component_data_dict)
 	return true
 
 func load_from_res() -> bool:
@@ -55,6 +56,9 @@ func load_from_res() -> bool:
 	if comp_dict_res == null:
 		push_error("load res failed ", self)
 		return false
+	if comp_dict_res.component_data_dict.size() == 0:
+		print("load component res empty , data = ", component_data_dict)
+		return true
 	component_data_dict = comp_dict_res.component_data_dict
 	print("load component res sunncess , data = ", component_data_dict)
 	return true

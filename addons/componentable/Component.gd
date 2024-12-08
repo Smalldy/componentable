@@ -13,8 +13,11 @@ static func remove_gd_component(component_class_name: String) -> bool:
 	if ComponentDB.has_same_component_type(component_class_name):
 		var component_data:ComponentData = ComponentDB.find_componet_info(component_class_name)
 		if FileAccess.file_exists(component_data.script_resource_path):
-			OS.move_to_trash(component_data.script_resource_path)
+			# OS.move_to_trash(component_data.script_resource_path)
+			print("remove file = ", component_data.script_resource_path)
+			DirAccess.remove_absolute(component_data.script_resource_path)
 		ComponentDB.remove_component_info(component_class_name)
+		ComponentDB.dump_to_res()
 		return true
 	return false
 

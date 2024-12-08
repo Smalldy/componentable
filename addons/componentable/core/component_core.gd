@@ -3,13 +3,14 @@ class_name ComponentCore
 const tmp_script_file_path: String = "res://addons/componentable/component_base/component_node_extend_template.tmp"
 const COMPONENT_GROUP_NAME: String = "component_group"
 
-static var editor_plugin: EditorPlugin = null
-static var editor_interface: EditorInterface = null
-static var editor_inspector: EditorInspector = null
+static var editor_plugin: EditorPlugin = null: set = set_editor_plugin, get = get_editor_plugin
+static var editor_interface: EditorInterface = null: get = get_editor_interface
+static var editor_inspector: EditorInspector = null: get = get_editor_inspector
 static var signal_bus: ComponentSignalBus = null
 
 
 static func set_editor_plugin(new_editor_plugin: EditorPlugin):
+	print("set_editor_plugin ---------------------> : ", new_editor_plugin)
 	editor_plugin = new_editor_plugin
 	if editor_plugin:
 		editor_interface = editor_plugin.get_editor_interface()
@@ -19,6 +20,13 @@ static func set_editor_plugin(new_editor_plugin: EditorPlugin):
 
 static func get_editor_plugin() -> EditorPlugin:
 	return editor_plugin
+
+static func get_editor_interface() -> EditorInterface:
+	return editor_plugin.get_editor_interface()
+
+static func get_editor_inspector() -> EditorInspector:
+	return editor_plugin.get_editor_interface().get_inspector()
+
 
 static func get_selected_node() -> Node:
 	if editor_interface.get_selection().get_selected_nodes().size():
