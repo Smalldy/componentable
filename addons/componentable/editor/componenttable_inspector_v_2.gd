@@ -6,7 +6,7 @@ var selected_node:Node
 
 func _ready() -> void:
 	print("componentable_inspector_v_2 ready, self = ", self)
-	ComponentDB.load_from_json()
+	ComponentDB.load_from_res()
 	pass
 
 func _on_button_add_comp_pressed() -> void:
@@ -45,6 +45,7 @@ func get_attached_info(component:Node) -> ComponentAttachData:
 	return info
 	
 func refresh_attached():
+	print("refresh_attached")
 	for child in $"%VBoxContainerAttach".get_children():
 		child.queue_free()
 
@@ -61,7 +62,7 @@ func init_all():
 func _on_create_component_dialog_new_component_created(component_class_name:String) -> void:
 	print('_on_create_component_dialog_new_component_created')
 	add_component_to_all(component_class_name)
-	ComponentDB.dump_to_json()
+	ComponentDB.dump_to_res()
 	pass # Replace with function body.
 
 func _on_create_component_dialog_component_attached() -> void:

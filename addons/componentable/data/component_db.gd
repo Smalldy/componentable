@@ -9,7 +9,7 @@ func set_component_info(component_data:ComponentData) -> bool :
 	component_data_dict[component_data.component_class_name] = component_data	
 	return true
 	
-func remove_componet_info(component_class_name:String) -> bool:
+func remove_component_info(component_class_name:String) -> bool:
 	return component_data_dict.erase(component_class_name)
 	
 	
@@ -36,7 +36,7 @@ func clear_attached_info() -> bool:
 	component_attched_array = []
 	return true
 		
-func dump_to_json() -> bool:
+func dump_to_res() -> bool:
 	var res_path = "res://addons/componentable/user_component_data/components.tres"
 	var res = ComponnetDataRes.new()
 	res.component_data_dict = component_data_dict
@@ -46,7 +46,7 @@ func dump_to_json() -> bool:
 		return false
 	return true
 
-func load_from_json() -> bool:
+func load_from_res() -> bool:
 	var res_path = "res://addons/componentable/user_component_data/components.tres"
 	if not ResourceLoader.exists(res_path):
 		return true

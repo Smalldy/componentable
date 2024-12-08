@@ -66,6 +66,18 @@ static func attach_node_with_script(host: Node, target_script_path: String, comp
 	node.owner = editor_plugin.get_editor_interface().get_edited_scene_root()
 	return node
 
+# 移除脚本
+static func remove_component_node(node_component_path:String):
+	var scene:SceneTree = Engine.get_main_loop() as SceneTree
+	var comp_node = editor_plugin.get_node(node_component_path)
+	if comp_node and ComponentDB.has_same_component_type(comp_node.get_script().get_global_name()):
+		var parent = comp_node.get_parent()
+		parent.remove_child(comp_node)
+		comp_node.queue_free()
+		
+	return 
+
+
 
 static func get_class_name_from_file_basename(base_name: String) -> String:
 	var compoent_class_name = base_name

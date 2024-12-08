@@ -102,9 +102,16 @@ func _on_button_edit_script_pressed() -> void:
 
 
 func _on_button_attach_pressed() -> void:
+	print("_on_button_attach_pressed ")
+	Component.attach_gd_component(ComponentCore.get_selected_node(), component_data.script_resource_path, component_data.component_class_name)
+	ComponentCore.signal_bus.refresh_attach_list.emit()
+	print("ComponentCore.signal_bus.refresh_attach_list.emit() ")
 	pass # Replace with function body.
 
 
 func _on_button_detach_pressed() -> void:
+	print("_on_button_detach_pressed not implement")
+	Component.detach_gd_component(component_attched_data.component_path)
+	ComponentCore.signal_bus.refresh_attach_list.emit()
 	pass # Replace with function body.
 
