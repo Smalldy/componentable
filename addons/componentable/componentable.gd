@@ -29,7 +29,7 @@ func _enter_tree():
 	)
 	
 	ComponentCore.editor_interface.get_selection().selection_changed.connect(componentable2_ui._on_selection_changed)
-
+	componentable2_ui.init_all()
 
 
 	

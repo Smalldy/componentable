@@ -53,6 +53,10 @@ func refresh_attached():
 		add_component_to_attached(attached_info.component_class_name, attached_info)
 	pass
 	
+func init_all():
+	for key in ComponentDB.component_data_dict:
+		add_component_to_all(key)
+	pass
 
 func _on_create_component_dialog_new_component_created(component_class_name:String) -> void:
 	print('_on_create_component_dialog_new_component_created')

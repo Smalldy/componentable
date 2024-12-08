@@ -45,7 +45,6 @@ static func replace_script_template(target_script_path: String, temp_extend: Str
 	# 创建componentdata
 	var component_data = ComponentData.new()
 	component_data.component_show_name = tmp_class_name.capitalize()
-	component_data.component_enable = true
 	component_data.component_type = ComponentData.ComponentType.kScriptComponent
 	component_data.host_type_name = tmp_host_type
 	component_data.extend_class_name = temp_extend

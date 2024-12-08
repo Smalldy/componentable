@@ -10,12 +10,8 @@ enum ComponentType {
 }
 
 ######################### 配置信息 ###################
-## id 唯一标识符
-@export var comp_id:String = ""
 ## 展示再插件上的名称
 @export var component_show_name:String = ""
-## 组件是否处于激活状态
-@export var component_enable:bool = true
 ## 组件类型
 @export var component_type:ComponentType = ComponentType.kScriptComponent
 ## 宿主类型名
