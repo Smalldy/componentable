@@ -125,5 +125,6 @@ func _on_confirm_delete_component_dialog_confirmed() -> void:
 	# 	if ComponentDB.has_same_component_type(component.component_class_name) :
 	# 		Component.detach_gd_component(component_node_path)
 	Component.remove_gd_component(component_data.component_class_name)
+	ComponentCore.signal_bus.refresh_all_component_list.emit()
 	pass # Replace with function body.
 

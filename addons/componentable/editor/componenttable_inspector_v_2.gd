@@ -53,6 +53,12 @@ func refresh_attached():
 	for attached_info in all_attched:
 		add_component_to_attached(attached_info.component_class_name, attached_info)
 	pass
+
+func refresh_all():
+	print("refresh_all")
+	for child in $"%VBoxContainerAll".get_children():
+		child.queue_free()
+	init_all()
 	
 func init_all():
 	for key in ComponentDB.component_data_dict:

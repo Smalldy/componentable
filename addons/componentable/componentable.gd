@@ -23,6 +23,7 @@ func _enter_tree():
 	componentable2_ui.init_all()
 	print("connected refresh_attach_list")
 	ComponentCore.signal_bus.refresh_attach_list.connect(componentable2_ui._on_selection_changed)
+	ComponentCore.signal_bus.refresh_all_component_list.connect(componentable2_ui.refresh_all)
 
 	
 func _exit_tree():
