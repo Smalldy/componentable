@@ -2,158 +2,85 @@
   <img src="images/icon.png" height="200px" />
 </p>
 
-# Componentable
+# EasyComponent
+面向组件编程在Godot中时一个比较好的编程模型，此插件帮助开发者在Godot中创建组件，简化重复行为。
 
-A Godot Plugin to create generic components to your project's logic to make better maintenance
+> 项目处于早期阶段！请注意保护项目数据，推荐使用git。
 
-> Works only on Godot 4.x versions
+> 此插件在 4.3 版本开发。
 
-<br>
+> 此插件受到 https://github.com/GumpDev/componentable 启发，感谢你的贡献！
 
-### ✨ New Version 2.0 ✨
+## 为什么要制作这个插件
 
-- Added new UI tab for componentable, easy to create, modify components and see current values
-- Automatic creation of componentable and components
-- New icons for components
-- Many bugs fixed
+### 我发现有很多ECS 插件，这与他们有何不同？
+本插件的主要目的是组件复用，它的功能非常轻量化，如果你需要管理动辄上千个节点的数据，请使用ECS插件。
 
-#### Future plans
+### 我可以使用componentable而不是EasyComponent
+这取决于你的逻辑复用的粒度，如果你仅仅想要复用代码逻辑，我更推荐你使用componentable
 
-- Create a UI Editor for all values from components, so you don't need to select component nodes to change values
+### EasyComponent 提供了什么？
+![整体预览](images/preview.png)
 
-<br>
-<br>
+commponentable 生成的组件基类继承了 Node，这意味着组件本身只能承载逻辑，而不能作为一个真正的实体。
 
-## Table of Contents
+这对于简单的逻辑复用非常友好，但是对于更粗粒度的功能复用就有些力不从心。
+EasyComponent 目前提供了3个可用的基类
+- ComponentNode
+- ComponentNode2D
+- ComponentNode3D
 
-- [📟 What is Componentable?](#what-is-componatable)
-- [🔧 Installation](#installation)
-- [📝 Getting Started](#getting-started)
-- [🤔 FAQ](#faq)
+创建插件时，宿主类型可选当前宿主的自定义类型，其父类以及任意级别的间接父类。
 
-<br>
-<a id="what-is-componentable"></a>
+创建时，需要指定一个脚本文件，插件会为你自动生成内容，以下是一个生成示例：
+```php
+extends ComponentNode2D
+class_name TestComp2d 
+@export @onready var host:Node2D = get_host()
 
-## 📟 What is Componentable?
-
-The main goal of the Componentable is to create components to some classes to share responsibility between nodes.
-
-### Why use Components?
-
-![Structure Comparation with componentable and without](images/componentable_compare.png)
-
-With this you can split the logic in many scripts with low code, and you can customize some behaviours for many nodes with same scene
-
-![Componentable properties](images/componentable_properties.png)
-
-Example of selection of components on Componentable
-
-<br>
-
-### Componentable Flow
-
-![](images/component_flow.png)
-The componentable flow is the componentable will always be required, so when you create a component will always have a variable with the componentable as value, but componentable can call the component but the component could not exist.
-
-<br>
-<a id="installation"></a>
-
-## 🔧 Installation
-
-- You can search "Componentable" on Godot Assets Library
-- You can download this repo, copy and paste the `addons/componentable` into your project's folder
-
-<br>
-<a id="getting-started"></a>
-
-## 📝 Getting Started
-
-### Creating a Component
-
-To start just select a node and in the "Componentable" tab click on `Create Componentable`
-
-Then select a path and a name to your component, will create a Componen
-> Node don't need to have a script, componentable can be used with build-in types
-
-So for in our component example `Glowing` will make the player glow with:
-
-```godot
-class_name Glowing extends PlayerComponent
-
-#You can access the variable player to get the parent of this component, that is a class named Player
-
-func _ready():
-	if active: # active is a variable inside PlayerComponent to make some enabling behaviours
-		create_tween().tween_property(player, "modulate:a", 0, 1)
+const kComponentExtendTypeName = "ComponentNode2D"
+const kComponentClassName = "TestComp2d"
+const kComponentHostTypeName = "Node2D"
 ```
 
-then you select the `Componentable` node you can select the component
+host 被指定为Node2D，创建时你可以选择Node2D和Node，使用Node意味着你的插件适用范围更广，使用Node2D意味着你的组件更加精细。这取决于你的需求。
 
-<br>
+创建完成后，系统将自动挂载此组件到宿主节点上。
 
-![](images/enabling_component.png)
+![一个挂载组件的节点](images/image_node_and_comp.png)
 
-> This list of components will show all components that is from this node type and node parent types
 
-when selected a component will show up as a node in components node of your `Componentable`
 
-<br>
 
-![Alt text](images/component_node.png)
+## 安装
+下载本仓库，复制 EasyComponent 文件夹到你的 Godot addons 目录下。
 
-Here you can see that we have two variables `player` that will be automatic assign as the `Componentable` Node, and the `active` variable, that will disable the behavior in your logic.
+在编辑器中启用此插件
 
-You can make more exported variables to create more customization to your component
+## 使用
+首先，点击一个节点，使其处于选中状态。
 
-<br>
+点击插件中的 ADD 按钮，选择一个路径，填写组件名称和后缀名（计划支持gd和tscn， 目前仅完成gd），选择组件继承的类型（系统自动计算，一般不需要手动选择），选择宿主类型。
 
-### Getting a Component from a Node
+点击确定组件创建完毕。宿主自动挂载该组件，同时记录到组件数据库。
 
-When you want to get a component from a `Componentable`, you can use:
+以下是一个创建过多个组件的场景树和插件界面：
+![alt text](images/scene_tree_with_comp.png)
+![alt text](images/plugin_dock.png)
 
-```godot
-var glowing: Glowing = Component.find(self, "Glowing")
-```
+- Attached 显示当前点击的节点挂载的组件，您可以点击Detach按钮，从节点中分离组件。
+- All 显示组件数据库中保存的组件列表，您可以点击Attach按钮，将组件挂载到当前点击的节点上。
+- 垃圾桶按钮表示从组件数据库中删除此组件，请注意，用户要首先删除挂载的组件，插件无法保证数据一致性。但是这不会导致编辑器崩溃。
 
-If you want to get a component from a other node, you can use:
+点击开关按钮，可以激活或者关闭组件，这会影响组件中的enable变量的值，需要用户自己处理对应逻辑。
 
-```godot
-var glowing: Glowing = Component.find(player, "Glowing")
-```
+## 计划
+1. 支持tscn插件，对比单一的脚本，tscn拥有更强的组织能力。（优先）
+2. 支持UI基类
+3. 支持viewport基类
+4. 国际化
+5. 替换logo
 
-> Just remember the component can be null
 
-<br>
-
-### Adding or removing component in runtime
-
-To add a component to a componentable in runtime you can use:
-
-```godot
-Component.subscribe(node, "ComponentName")
-```
-
-and to remove a component you can use:
-
-```godot
-Component.unsubscribe(node, "ComponentName")
-```
-
-<br>
-
-### Some others functions
-
-```godot
-Component.has(node, "component") # return true if this componentable have this component
-
-Component.get_all(node) # return all components in this componentable
-```
-
-<br>
-<a id="faq"></a>
-
-## 🤔 FAQ
-
-- **I Found a BUG!** _[Click here](https://github.com/GumpDev/componentable/issues) and open an issue_
-- **Can I help with the project?** _Sure! just send your PR :D_
-- **Can I contact you?** _Yep, send email to contact@gump.dev_
+## 贡献
+欢迎提交PR 

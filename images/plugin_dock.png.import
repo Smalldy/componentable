@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boqhpvr1rm0i4"
-path="res://.godot/imported/create_componentable.png-5ab0aff3e77c63bcfd3c205d5a67a300.ctex"
+uid="uid://cbxt74x1evxm5"
+path="res://.godot/imported/plugin_dock.png-876312be9ac82ceeed76befc48d102c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/create_componentable.png"
-dest_files=["res://.godot/imported/create_componentable.png-5ab0aff3e77c63bcfd3c205d5a67a300.ctex"]
+source_file="res://images/plugin_dock.png"
+dest_files=["res://.godot/imported/plugin_dock.png-876312be9ac82ceeed76befc48d102c6.ctex"]
 
 [params]
 

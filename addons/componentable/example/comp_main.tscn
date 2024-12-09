@@ -1,5 +1,27 @@
-[gd_scene format=3 uid="uid://dsb6mpm4il22v"]
+[gd_scene load_steps=4 format=3 uid="uid://dsb6mpm4il22v"]
+
+[ext_resource type="Script" path="res://addons/componentable/example/components/test_comp_2D.gd" id="1_4b3lm"]
+[ext_resource type="Script" path="res://addons/componentable/example/components/test_comp_ch_2D.gd" id="2_468mu"]
+[ext_resource type="Script" path="res://addons/componentable/example/components/test_comp_ch_3D.gd" id="3_p4ulg"]
 
 [node name="CompMain" type="Node2D"]
 
 [node name="Node" type="Node" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="TestComp2d" type="Node2D" parent="Node2D" node_paths=PackedStringArray("host") groups=["components"]]
+script = ExtResource("1_4b3lm")
+host = NodePath("..")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="TestCompCh2d" type="Node2D" parent="CharacterBody2D" node_paths=PackedStringArray("host") groups=["components"]]
+script = ExtResource("2_468mu")
+host = NodePath("..")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+
+[node name="TestCompCh3d" type="Node3D" parent="CharacterBody3D" node_paths=PackedStringArray("host") groups=["components"]]
+script = ExtResource("3_p4ulg")
+host = NodePath("..")

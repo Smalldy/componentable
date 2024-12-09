@@ -1,7 +1,42 @@
-[gd_resource type="Resource" script_class="ComponnetDataRes" load_steps=2 format=3 uid="uid://cnstm52hts2fd"]
+[gd_resource type="Resource" script_class="ComponnetDataRes" load_steps=6 format=3 uid="uid://cnstm52hts2fd"]
 
+[ext_resource type="Script" path="res://addons/componentable/data/component_data.gd" id="1_fxqcx"]
 [ext_resource type="Script" path="res://addons/componentable/user_component_data/user_componnet_data.gd" id="2_4rb07"]
+
+[sub_resource type="Resource" id="Resource_g0h1u"]
+script = ExtResource("1_fxqcx")
+component_show_name = "Test Comp 2d"
+component_type = 1
+host_type_name = "Node2D"
+extend_class_name = "ComponentNode2D"
+component_class_name = "TestComp2d"
+script_resource_path = "res://addons/componentable/example/components/test_comp_2D.gd"
+tscn_resource_path = ""
+
+[sub_resource type="Resource" id="Resource_83i13"]
+script = ExtResource("1_fxqcx")
+component_show_name = "Test Comp Ch 2d"
+component_type = 1
+host_type_name = "CharacterBody2D"
+extend_class_name = "ComponentNode2D"
+component_class_name = "TestCompCh2d"
+script_resource_path = "res://addons/componentable/example/components/test_comp_ch_2D.gd"
+tscn_resource_path = ""
+
+[sub_resource type="Resource" id="Resource_cl8l3"]
+script = ExtResource("1_fxqcx")
+component_show_name = "Test Comp Ch 3d"
+component_type = 1
+host_type_name = "CharacterBody3D"
+extend_class_name = "ComponentNode3D"
+component_class_name = "TestCompCh3d"
+script_resource_path = "res://addons/componentable/example/components/test_comp_ch_3D.gd"
+tscn_resource_path = ""
 
 [resource]
 script = ExtResource("2_4rb07")
-component_data_dict = {}
+component_data_dict = {
+"TestComp2d": SubResource("Resource_g0h1u"),
+"TestCompCh2d": SubResource("Resource_83i13"),
+"TestCompCh3d": SubResource("Resource_cl8l3")
+}
